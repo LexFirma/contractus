@@ -7,7 +7,7 @@ Serviço de gerenciamento de contratos e pagamentos desenvolvido para a discipli
 Como administrador do sistema devo ser capaz de cadastrar os usuários com informações relativas a sua identificação (Nome, Endereço, Contato, Número de Registro, Tipo De Registro) e seu estado de pagamento (adimplemente ou inadimplente), sendo esta uma condição de acesso ao sistema. 
 
 ### Caso de Uso 2
-Como usuário devo ser capaz de modificar meu login e senha indicados pelo administrador apenas no cadastro inicial.
+Como usuário devo ser capaz de fazer login no sistema e modificar meus dados de acesso (login e senha) indicados pelo administrador apenas no cadastro inicial.
 
 ### Caso de Uso 3
 Como usuário devo ser capaz de cadastrar contratos de pagamento no sistema, contendo valor e data de pagamento das parcelas, em que o usuário possa ter o papel de credor ou devedor, tendo informações relativas a identificação da outra parte (Nome, Endereço, Contato, Número de Registro, Tipo De Registro).
