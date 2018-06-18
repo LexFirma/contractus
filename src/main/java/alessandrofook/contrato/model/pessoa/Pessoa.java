@@ -19,13 +19,14 @@ public class Pessoa {
     @NotEmpty(message = "O nome da pessoa não pode ser vazio!")
     private String nome;
 
-    @NotEmpty(message = "A função da pessoa não pode ser vazia!")
     @NotNull(message = "A função da pessoa não pode ser null!")
     private FuncaoPessoa funcao;
 
     @NotNull(message = "O senha da pessoa não pode ser null!")
     @NotEmpty(message = "O senha da pessoa não pode ser vazio!")
     private String senha;
+
+    private boolean statusDePagamento;
 
     public Pessoa() {}
 
@@ -61,6 +62,14 @@ public class Pessoa {
         this.senha = senha;
     }
 
+    public boolean isStatusDePagamento() {
+        return statusDePagamento;
+    }
+
+    public void setStatusDePagamento(boolean statusDePagamento) {
+        this.statusDePagamento = statusDePagamento;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,7 +77,8 @@ public class Pessoa {
         Pessoa pessoa = (Pessoa) o;
         return Objects.equals(getNome(), pessoa.getNome()) &&
                 getFuncao() == pessoa.getFuncao() &&
-                Objects.equals(getSenha(), pessoa.getSenha());
+                Objects.equals(getSenha(), pessoa.getSenha()) &&
+                isStatusDePagamento() == pessoa.isStatusDePagamento();
     }
 
     @Override
