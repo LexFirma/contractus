@@ -1,9 +1,11 @@
-package alessandrofook.contrato.model;
+package alessandrofook.contrato.service;
 
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PessoaService {
@@ -23,5 +25,9 @@ public class PessoaService {
         Pessoa pessoa = repository.getOne(id);
         pessoa.setStatusDePagamento(!pessoa.isStatusDePagamento());
         repository.save(pessoa);
+    }
+
+    public List<Pessoa> getPessoas() {
+        return repository.findAll();
     }
 }
