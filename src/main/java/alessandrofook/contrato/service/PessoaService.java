@@ -30,4 +30,8 @@ public class PessoaService {
     public List<Pessoa> getPessoas() {
         return repository.findAll();
     }
+
+    public Pessoa getByRegistration(String nome) {
+        return repository.findByNome();
+    }
 }

@@ -83,7 +83,6 @@ public class Pessoa {
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getNome(), getFuncao(), getSenha());
+        return Objects.hash(getNome(), getFuncao(), getSenha(), isStatusDePagamento());
     }
 }

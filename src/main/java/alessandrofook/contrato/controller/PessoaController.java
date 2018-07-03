@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pessoa")
+@RequestMapping("/pessoas")
 public class PessoaController {
 
     @Autowired
@@ -18,11 +18,6 @@ public class PessoaController {
     @ResponseBody
     public Pessoa cadastrarPessoa(@RequestBody Pessoa pessoa) {
         return service.cadastrarPessoa(pessoa);
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello buddy!";
     }
 
     @GetMapping
