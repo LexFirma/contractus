@@ -1,10 +1,11 @@
 package alessandrofook.contrato.controller;
 
 import alessandrofook.contrato.model.pessoa.Pessoa;
+import alessandrofook.contrato.service.CredencialService;
 import alessandrofook.contrato.service.PessoaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,35 +23,45 @@ import org.springframework.web.bind.annotation.RestController;
 public class PessoaController {
 
   @Autowired
-  private PessoaService service;
+  private PessoaService pessoaService;
+
+  @Autowired
+  private CredencialService credencialService;
 
   @PostMapping
   @ResponseBody
+  @Transactional
   public Pessoa cadastrarPessoa(@RequestBody Pessoa pessoa) {
-    return service.cadastrarPessoa(pessoa);
+
+    Pessoa pessoaCadastrada = pessoaService.cadastrarPessoa(pessoa);
+    credencialService.gerarCredencialDePessoa(pessoaCadastrada);
+
+    return pessoaCadastrada;
   }
 
   @PatchMapping("{id}")
   @ResponseBody
   public Pessoa mudarStatusDePagamento(@PathVariable("id") Long id) {
-    return service.mudarStatusDePagamento(id);
+    return pessoaService.mudarStatusDePagamento(id);
   }
 
   @PutMapping
   @ResponseBody
   public Pessoa editarPessoa(@RequestBody Pessoa pessoa) {
-    return service.editarPessoa(pessoa);
+    return pessoaService.editarPessoa(pessoa);
   }
 
   @DeleteMapping("/{id}")
+  @Transactional
   public void deletarPessoa(@PathVariable("id") Long id) {
-    service.removerPessoa(id);
+    credencialService.removerCredencialDePessoa(id);
+    pessoaService.removerPessoa(id);
   }
 
   @GetMapping
   @ResponseBody
   public List<Pessoa> listarPessoas() {
-    return service.listarPessoas();
+    return pessoaService.listarPessoas();
   }
 
 

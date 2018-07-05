@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CredencialRepository extends JpaRepository<Credencial, Long> {
 
+
+  void deleteByPessoaId(Long pessoaId);
 }

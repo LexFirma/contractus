@@ -31,6 +31,14 @@ public class Credencial {
   @OneToOne
   private Pessoa pessoa;
 
+  public Credencial(Pessoa pessoa) {
+    this.setLogin(pessoa.getNome());
+    this.setSenha("admin");
+    this.setRole(Role.USUARIO);
+    this.setPessoa(pessoa);
+  }
+
+  public Credencial() {}
 
   public Long getId() {
     return id;
