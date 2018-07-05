@@ -75,15 +75,12 @@ public class Pessoa {
         if (this == o) return true;
         if (!(o instanceof Pessoa)) return false;
         Pessoa pessoa = (Pessoa) o;
-        return Objects.equals(getNome(), pessoa.getNome()) &&
-                getFuncao() == pessoa.getFuncao() &&
-                Objects.equals(getSenha(), pessoa.getSenha()) &&
-                isStatusDePagamento() == pessoa.isStatusDePagamento();
+        return Objects.equals(getId(), pessoa.getId()) &&
+                Objects.equals(getNome(), pessoa.getNome());
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(getNome(), getFuncao(), getSenha());
+        return Objects.hash(getId(), getNome());
     }
 }

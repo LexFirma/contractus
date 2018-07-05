@@ -25,5 +25,13 @@ public class CarregadorDePessoa implements ApplicationRunner {
         admin.setSenha("Admin");
         admin.setStatusDePagamento(true);
         repository.save(admin);
+
+        Pessoa user = new Pessoa();
+        user.setFuncao(FuncaoPessoa.USUARIO);
+        user.setNome("User");
+        user.setSenha("Admin");
+        user.setStatusDePagamento(true);
+        repository.save(user);
+
     }
 }
