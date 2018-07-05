@@ -37,6 +37,6 @@ public class PessoaController {
     @ResponseBody
     public List<Pessoa> listarPessoas() {
         return service.listarPessoas();
-    }
 
+    }
 }
