@@ -19,13 +19,6 @@ public class Pessoa {
   @NotEmpty(message = "O nome da pessoa não pode ser vazio!")
   private String nome;
 
-  @NotNull(message = "A função da pessoa não pode ser null!")
-  private FuncaoPessoa funcao;
-
-  @NotNull(message = "O senha da pessoa não pode ser null!")
-  @NotEmpty(message = "O senha da pessoa não pode ser vazio!")
-  private String senha;
-
   private boolean statusDePagamento;
 
   public Pessoa() {
@@ -45,22 +38,6 @@ public class Pessoa {
 
   public void setNome(String nome) {
     this.nome = nome;
-  }
-
-  public FuncaoPessoa getFuncao() {
-    return funcao;
-  }
-
-  public void setFuncao(FuncaoPessoa funcao) {
-    this.funcao = funcao;
-  }
-
-  public String getSenha() {
-    return senha;
-  }
-
-  public void setSenha(String senha) {
-    this.senha = senha;
   }
 
   public boolean isStatusDePagamento() {
