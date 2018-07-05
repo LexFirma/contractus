@@ -34,7 +34,7 @@ public class Credencial {
   private Pessoa pessoa;
 
   /**
-   * Contrutor de credencial a partir de uma pessoa cadastrada no sistema.
+   * Construtor de credencial a partir de uma pessoa cadastrada no sistema.
    * @param pessoa - Objeto referente a uma pessoa cadastrada no sistema.
    */
   public Credencial(Pessoa pessoa) {
