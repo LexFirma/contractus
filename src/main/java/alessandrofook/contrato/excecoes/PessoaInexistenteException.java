@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class PessoaInexistenteException extends RuntimeException {
-    public PessoaInexistenteException() {
-        super("Pessoa não cadastrada no sistema!");
-    }
+
+  public PessoaInexistenteException() {
+    super("Pessoa não cadastrada no sistema!");
+  }
 }

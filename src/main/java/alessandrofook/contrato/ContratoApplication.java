@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableAutoConfiguration
 public class ContratoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ContratoApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(ContratoApplication.class, args);
+  }
 
 }
