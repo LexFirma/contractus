@@ -10,7 +10,7 @@ Como administrador do sistema devo ser capaz de cadastrar os usuários com infor
 Como usuário devo ser capaz de fazer login no sistema e modificar meus dados de acesso (login e senha) indicados pelo administrador apenas no cadastro inicial.
 
 ### Caso de Uso 3
-Como usuário devo ser capaz de cadastrar contratos de pagamento no sistema, contendo valor e data de pagamento das parcelas, em que o usuário possa ter o papel de credor ou devedor, tendo informações relativas a identificação da outra parte (Nome, Endereço, Contato, Número de Registro, Tipo De Registro).
+Como usuário devo ser capaz de cadastrar contratos de pagamento no sistema, contendo valor e data de pagamento das parcelas, em que o usuário possa ter o papelDoUsuario de credor ou devedor, tendo informações relativas a identificação da outra parte (Nome, Endereço, Contato, Número de Registro, Tipo De Registro).
 
 ### Caso de Uso 4
 Como usuário posso assinalar a adimplência de uma parcela do contrato, ou modificar sua forma de pagamento e datas de vencimento.
