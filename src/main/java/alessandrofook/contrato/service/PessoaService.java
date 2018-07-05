@@ -1,6 +1,7 @@
 package alessandrofook.contrato.service;
 
 import alessandrofook.contrato.excecoes.CadastroException;
+import alessandrofook.contrato.excecoes.EdicaoDePessoaException;
 import alessandrofook.contrato.excecoes.PessoaInexistenteException;
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.repository.PessoaRepository;
@@ -17,6 +18,7 @@ public class PessoaService {
 
   /**
    * Realiza o cadastro de uma nova pessoa no banco de dados do sistema.
+   *
    * @param pessoa - Objeto do tipo pessoa a ser cadastrado no sistema.
    * @return Objeto do tipo pessoa conforme se encontra no banco de dados.
    */
@@ -35,6 +37,7 @@ public class PessoaService {
 
   /**
    * Modifica o valor do status de pagamento para o valor lógico oposto.
+   *
    * @param id - chave de registro do usuário a ser objeto da alteração.
    * @return Objeto do tipo Pessoa com a alteração do status de pagamento.
    */
@@ -44,7 +47,7 @@ public class PessoaService {
       throw new PessoaInexistenteException();
     }
 
-    Pessoa pessoa = repository.findById(id).get();
+    Pessoa pessoa = repository.getOne(id);
     pessoa.setStatusDePagamento(!pessoa.isStatusDePagamento());
 
     return repository.save(pessoa);
@@ -52,6 +55,7 @@ public class PessoaService {
 
   /**
    * Remove um determinado usuário do sistema.
+   *
    * @param id - chave de registro do usuário a ser objeto da alteração.
    */
   public void removerPessoa(Long id) {
@@ -64,5 +68,26 @@ public class PessoaService {
 
   public List<Pessoa> listarPessoas() {
     return repository.findAll();
+  }
+
+  /**
+   * Método que edita as informações de uma pessoa cadastrada no sistema.
+   * @param pessoa - Objeto contendo as informações de uma pessoa do sistema.
+   * @return Objeto do tipo Pessoa com as informações atualizadas na base de dados.
+   */
+  public Pessoa editarPessoa(Pessoa pessoa) {
+
+    if (!repository.existsById(pessoa.getId())) {
+      throw new PessoaInexistenteException();
+
+    } else {
+      Pessoa pessoaCadastrada = repository.getOne(pessoa.getId());
+
+      if (pessoaCadastrada.isStatusDePagamento() != pessoa.isStatusDePagamento()) {
+        throw new EdicaoDePessoaException("Status de Pagamento");
+      }
+
+      return repository.save(pessoa);
+    }
   }
 }
