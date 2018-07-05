@@ -24,15 +24,9 @@ public class IniciarBd implements ApplicationRunner {
   @Override
   public void run(ApplicationArguments applicationArguments) throws Exception {
 
-    Pessoa admin = new Pessoa();
-    admin.setNome("Admin");
-    admin.setStatusDePagamento(true);
-    pessoaRepository.save(admin);
-
     Credencial adminCd = new Credencial();
     adminCd.setLogin("Admin");
     adminCd.setSenha("admin");
-    adminCd.setPessoa(admin);
     adminCd.setRole(Role.ADMIN);
     credencialRepository.save(adminCd);
 

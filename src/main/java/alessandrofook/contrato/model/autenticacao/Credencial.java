@@ -89,12 +89,13 @@ public class Credencial {
       return false;
     }
     Credencial that = (Credencial) o;
-    return Objects.equals(getLogin(), that.getLogin());
+    return Objects.equals(getLogin(), that.getLogin()) &&
+        Objects.equals(getSenha(), that.getSenha());
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(getLogin());
+    return Objects.hash(getLogin(), getSenha());
   }
 }
