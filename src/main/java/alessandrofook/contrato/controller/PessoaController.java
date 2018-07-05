@@ -28,6 +28,12 @@ public class PessoaController {
   @Autowired
   private CredencialService credencialService;
 
+  /**
+   * Requisição responsável por cadastar uma pessoa e gerar sua respectiva credencial de acesso ao
+   * sistema, fazendo as devidas conexões e relações na base de dados.
+   * @param pessoa - Objeto contendo as informações da pessoa a serem cadastradas no sistema.
+   * @return Um objeto do tipo Pessoa conforme cadastrado no sistema.
+   */
   @PostMapping
   @ResponseBody
   @Transactional

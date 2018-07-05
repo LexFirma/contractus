@@ -21,7 +21,7 @@ public class CredencialController {
   private CredencialService credencialService;
 
   @PostMapping
-  public void criarAdministrador(@RequestBody Credencial credencial){
+  public void criarAdministrador(@RequestBody Credencial credencial) {
     credencialService.cadastrarCredencial(credencial);
   }
 

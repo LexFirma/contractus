@@ -2,6 +2,7 @@ package alessandrofook.contrato.model.autenticacao;
 
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,7 @@ public class Credencial {
 
   @NotNull(message = "O login não pode ser null!")
   @NotEmpty(message = "O login não pode ser vazio!")
+  @Column(unique = true)
   private String login;
 
   @NotNull(message = "A senha não pode ser null!")
@@ -31,6 +33,10 @@ public class Credencial {
   @OneToOne
   private Pessoa pessoa;
 
+  /**
+   * Contrutor de credencial a partir de uma pessoa cadastrada no sistema.
+   * @param pessoa - Objeto referente a uma pessoa cadastrada no sistema.
+   */
   public Credencial(Pessoa pessoa) {
     this.setLogin(pessoa.getNome());
     this.setSenha("admin");
@@ -38,7 +44,8 @@ public class Credencial {
     this.setPessoa(pessoa);
   }
 
-  public Credencial() {}
+  public Credencial() {
+  }
 
   public Long getId() {
     return id;
@@ -89,8 +96,8 @@ public class Credencial {
       return false;
     }
     Credencial that = (Credencial) o;
-    return Objects.equals(getLogin(), that.getLogin()) &&
-        Objects.equals(getSenha(), that.getSenha());
+    return Objects.equals(getLogin(), that.getLogin())
+        && Objects.equals(getSenha(), that.getSenha());
   }
 
   @Override

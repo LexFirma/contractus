@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class EdicaoDeCredencialException extends RuntimeException {
 
   public EdicaoDeCredencialException() {
-    super("Não é possível editar a credencial nesta requisição para modificar o nível de acesso ao sistema!");
+    super("Não é possível editar a credencial nesta requisição"
+        + " para modificar o nível de acesso ao sistema!");
   }
 }

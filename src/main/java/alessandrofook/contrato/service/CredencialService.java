@@ -26,17 +26,25 @@ public class CredencialService {
     repository.deleteByPessoaId(pessoaId);
   }
 
+  /**
+   * Método que cria uma credencial de administrador no sistema.
+   * @param credencial - Objeto do tipo de Credencial que deve ter a Role de ADMIN.
+   */
   public void cadastrarCredencial(Credencial credencial) {
-    if(credencial.getRole().equals(Role.USUARIO)) {
+    if (credencial.getRole().equals(Role.USUARIO)) {
       throw new CadastroDeCredencialException();
     }
     repository.save(credencial);
   }
 
+  /**
+   * Método para modificação de credenciais existentes no sistema, não podendo modificar a Role.
+   * @param credencial - Objeto contendo informações a serem atualizadas no registro da credencial.
+   */
   public void editarCredencial(Credencial credencial) {
 
     Credencial credencialArmazenada = repository.findByLogin(credencial.getLogin());
-    if(credencial.getRole().equals(credencialArmazenada.getRole())) {
+    if (credencial.getRole().equals(credencialArmazenada.getRole())) {
       credencial.setId(credencialArmazenada.getId());
       repository.save(credencial);
 
@@ -45,11 +53,15 @@ public class CredencialService {
     }
   }
 
+  /**
+   * Método que remove uma credencial do sistema a partir do seu login.
+   * @param login - Objeto do tipo String que identifica a credencial a ser removida.
+   */
   public void removerCredencialDeAdmin(String login) {
 
     Credencial credencial = repository.findByLogin(login);
 
-    if(credencial.getRole().equals(Role.ADMIN)) {
+    if (credencial.getRole().equals(Role.ADMIN)) {
       repository.deleteByLogin(login);
 
     } else {
