@@ -1,6 +1,6 @@
 package alessandrofook.contrato.service;
 
-import alessandrofook.contrato.excecoes.CadastroException;
+import alessandrofook.contrato.excecoes.CadastroDePessoaException;
 import alessandrofook.contrato.excecoes.EdicaoDePessoaException;
 import alessandrofook.contrato.excecoes.PessoaInexistenteException;
 import alessandrofook.contrato.model.pessoa.Pessoa;
@@ -25,10 +25,10 @@ public class PessoaService {
   public Pessoa cadastrarPessoa(Pessoa pessoa) {
 
     if (pessoa.getId() != null) {
-      throw new CadastroException("O valor do id deve ser selecionado pelo servidor!");
+      throw new CadastroDePessoaException("O valor do id deve ser selecionado pelo servidor!");
 
     } else if (repository.existsByNome(pessoa.getNome())) {
-      throw new CadastroException("Pessoa já existe no sistema");
+      throw new CadastroDePessoaException("Pessoa já existe no sistema");
 
     } else {
       return repository.save(pessoa);
