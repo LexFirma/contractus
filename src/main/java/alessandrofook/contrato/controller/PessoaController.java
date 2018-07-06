@@ -4,6 +4,7 @@ import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.service.CredencialService;
 import alessandrofook.contrato.service.PessoaService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +38,7 @@ public class PessoaController {
   @PostMapping
   @ResponseBody
   @Transactional
-  public Pessoa cadastrarPessoa(@RequestBody Pessoa pessoa) {
+  public Pessoa cadastrarPessoa(@RequestBody @Valid Pessoa pessoa) {
 
     Pessoa pessoaCadastrada = pessoaService.cadastrarPessoa(pessoa);
     credencialService.gerarCredencialDePessoa(pessoaCadastrada);
@@ -53,7 +54,7 @@ public class PessoaController {
 
   @PutMapping
   @ResponseBody
-  public Pessoa editarPessoa(@RequestBody Pessoa pessoa) {
+  public Pessoa editarPessoa(@RequestBody @Valid Pessoa pessoa) {
     return pessoaService.editarPessoa(pessoa);
   }
 
