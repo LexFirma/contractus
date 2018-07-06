@@ -1,5 +1,6 @@
 package alessandrofook.contrato.service;
 
+import alessandrofook.contrato.excecoes.ParcelasInvalidasException;
 import alessandrofook.contrato.model.contrato.Contraparte;
 import alessandrofook.contrato.model.contrato.Contrato;
 import alessandrofook.contrato.model.contrato.Parcela;
@@ -33,14 +34,24 @@ public class ContratoService {
   @Transactional
   public Contrato cadastrarContrato(Contrato contrato) {
 
+    armazenarParcelas(contrato);
+    contraparteRepository.saveAll(contrato.getContrapartes());
+
+    return contratoRepository.save(contrato);
+  }
+
+  private void armazenarParcelas(Contrato contrato) {
+    double total = 0;
+
     for (Parcela parcela : contrato.getParcelas()) {
-      parcela = parcelaRepository.save(parcela);
+      total += parcela.getValor();
     }
 
-    for (Contraparte contraparte : contrato.getContrapartes()) {
-      contraparte = contraparteRepository.save(contraparte);
+    if (!(total == contrato.getTotal())) {
+      throw new ParcelasInvalidasException();
     }
-    return contratoRepository.save(contrato);
+
+    parcelaRepository.saveAll(contrato.getParcelas());
   }
 
   /**
@@ -71,5 +82,13 @@ public class ContratoService {
 
   public Contrato getContrato(Long id) {
     return contratoRepository.getOne(id);
+  }
+
+  public Parcela adimplirParcela(Long parcelaId) {
+
+    Parcela parcela = parcelaRepository.getOne(parcelaId);
+    parcela.setPago(true);
+
+    return parcelaRepository.save(parcela);
   }
 }
