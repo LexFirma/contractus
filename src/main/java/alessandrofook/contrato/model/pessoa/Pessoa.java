@@ -1,10 +1,13 @@
 package alessandrofook.contrato.model.pessoa;
 
+import alessandrofook.contrato.model.contrato.Contrato;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -20,6 +23,9 @@ public class Pessoa {
   private String nome;
 
   private boolean statusDePagamento;
+
+  @OneToMany
+  private List<Contrato> contratos;
 
   public Pessoa() {
   }
@@ -46,6 +52,14 @@ public class Pessoa {
 
   public void setStatusDePagamento(boolean statusDePagamento) {
     this.statusDePagamento = statusDePagamento;
+  }
+
+  public List<Contrato> getContratos() {
+    return contratos;
+  }
+
+  public void setContratos(List<Contrato> contratos) {
+    this.contratos = contratos;
   }
 
   @Override

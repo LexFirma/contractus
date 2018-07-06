@@ -102,8 +102,8 @@ public class Contraparte {
       return false;
     }
     Contraparte that = (Contraparte) o;
-    return Objects.equals(getRegistro(), that.getRegistro()) &&
-        getTipoDeRegistro() == that.getTipoDeRegistro();
+    return Objects.equals(getRegistro(), that.getRegistro())
+        && getTipoDeRegistro() == that.getTipoDeRegistro();
   }
 
   @Override

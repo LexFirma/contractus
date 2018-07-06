@@ -90,4 +90,8 @@ public class PessoaService {
       return repository.save(pessoa);
     }
   }
+
+  public Pessoa getPessoa(Long id) {
+    return repository.getOne(id);
+  }
 }

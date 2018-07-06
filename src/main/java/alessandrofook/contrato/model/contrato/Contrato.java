@@ -68,4 +68,6 @@ public class Contrato {
   public void setParcelas(List<Parcela> parcelas) {
     this.parcelas = parcelas;
   }
+
+
 }

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/credencial")
+@RequestMapping("/credenciais ")
 public class CredencialController {
 
   @Autowired
