@@ -32,20 +32,9 @@ public class ContratoService {
 
     for (Contraparte contraparte : contrato.getContrapartes()) {
 
-      verificarContraparte(contraparte);
       contraparte = contraparteRepository.save(contraparte);
     }
     return contratoRepository.save(contrato);
-  }
-
-  private void verificarContraparte(Contraparte contraparte) {
-    if(contraparteRepository.existsByRegistro(contraparte.getRegistro())) {
-
-      String registro = contraparte.getRegistro();
-      Contraparte contraparteSalva = contraparteRepository.findByRegistro(registro);
-      Long bdId = contraparteSalva.getId();
-      contraparte.setId(bdId);
-    }
   }
 
   @Transactional
@@ -58,10 +47,14 @@ public class ContratoService {
     }
 
     for (Contraparte contraparte : contrato.getContrapartes()) {
-      List<Contrato> contratosList = contratoRepository.getByContrapartesId(contraparte.getId());
+      List<Contrato> contratosList = contratoRepository.findByContrapartesRegistro(contraparte.getRegistro());
       if(contratosList.size() == 1) contraparteRepository.delete(contraparte);
     }
 
     contratoRepository.delete(contrato);
+  }
+
+  public Contrato getContrato(Long id) {
+    return contratoRepository.getOne(id);
   }
 }

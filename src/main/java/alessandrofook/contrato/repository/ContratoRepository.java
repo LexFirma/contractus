@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContratoRepository extends JpaRepository<Contrato, Long> {
 
-  List<Contrato> getByContrapartesId(Long id);
+  List<Contrato> findByContrapartesRegistro(String registro);
 }

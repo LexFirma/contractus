@@ -29,16 +29,17 @@ public class ContratoController {
   public Contrato cadastrarContrato(@RequestBody @Valid Contrato contrato, @PathVariable("pessoaId") Long pessoaId) {
 
     Contrato contratoCadastrado = contratoService.cadastrarContrato(contrato);
-    Pessoa pessoa = pessoaService.getPessoa(pessoaId);
-
-    pessoa.getContratos().add(contratoCadastrado);
-    pessoaService.editarPessoa(pessoa);
+    pessoaService.cadastrarContrato(contratoCadastrado, pessoaId);
 
     return contratoCadastrado;
   }
 
   @DeleteMapping("/{id}")
   public void deletarContrato(@PathVariable("id") Long id) {
+
+    Contrato contrato = contratoService.getContrato(id);
+
+    pessoaService.removerContrato(contrato);
     contratoService.removerContrato(id);
   }
 

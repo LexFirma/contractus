@@ -3,6 +3,7 @@ package alessandrofook.contrato.service;
 import alessandrofook.contrato.excecoes.CadastroDePessoaException;
 import alessandrofook.contrato.excecoes.EdicaoDePessoaException;
 import alessandrofook.contrato.excecoes.PessoaInexistenteException;
+import alessandrofook.contrato.model.contrato.Contrato;
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.repository.PessoaRepository;
 import java.util.List;
@@ -93,5 +94,19 @@ public class PessoaService {
 
   public Pessoa getPessoa(Long id) {
     return repository.getOne(id);
+  }
+
+  public void removerContrato(Contrato contrato) {
+
+    Pessoa pessoa = repository.findByContratosContaining(contrato);
+    pessoa.getContratos().remove(contrato);
+    editarPessoa(pessoa);
+  }
+
+  public void cadastrarContrato(Contrato contratoCadastrado, Long id) {
+    Pessoa pessoa = repository.getOne(id);
+
+    pessoa.getContratos().add(contratoCadastrado);
+    editarPessoa(pessoa);
   }
 }

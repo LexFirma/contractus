@@ -5,9 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContraparteRepository extends JpaRepository<Contraparte, Long> {
+public interface ContraparteRepository extends JpaRepository<Contraparte, String> {
 
-  Contraparte findByRegistro(String registro);
-
-  boolean existsByRegistro(String registro);
 }
