@@ -7,6 +7,7 @@ import alessandrofook.contrato.model.contrato.Parcela;
 import alessandrofook.contrato.repository.ContraparteRepository;
 import alessandrofook.contrato.repository.ContratoRepository;
 import alessandrofook.contrato.repository.ParcelaRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,16 +35,18 @@ public class ContratoService {
   @Transactional
   public Contrato cadastrarContrato(Contrato contrato) {
 
-    armazenarParcelas(contrato);
+    validarParcelas(contrato, contrato.getParcelas());
+
+    parcelaRepository.saveAll(contrato.getParcelas());
     contraparteRepository.saveAll(contrato.getContrapartes());
 
     return contratoRepository.save(contrato);
   }
 
-  private void armazenarParcelas(Contrato contrato) {
+  private void validarParcelas(Contrato contrato, List<Parcela> parcelas) {
     double total = 0;
 
-    for (Parcela parcela : contrato.getParcelas()) {
+    for (Parcela parcela : parcelas) {
       total += parcela.getValor();
     }
 
@@ -51,7 +54,6 @@ public class ContratoService {
       throw new ParcelasInvalidasException();
     }
 
-    parcelaRepository.saveAll(contrato.getParcelas());
   }
 
   /**
@@ -90,5 +92,20 @@ public class ContratoService {
     parcela.setPago(true);
 
     return parcelaRepository.save(parcela);
+  }
+
+  @Transactional
+  public Contrato editarParcelas(Long contratoId, List<Parcela> parcelas) {
+
+    Contrato contrato = getContrato(contratoId);
+
+    validarParcelas(contrato, parcelas);
+    contrato.setParcelas(new ArrayList<>());
+    contratoRepository.saveAndFlush(contrato);
+    parcelaRepository.deleteAll(contrato.getParcelas());
+
+    List<Parcela> parcelasArmazenadas = parcelaRepository.saveAll(parcelas);
+    contrato.setParcelas(parcelasArmazenadas);
+    return contratoRepository.saveAndFlush(contrato);
   }
 }
