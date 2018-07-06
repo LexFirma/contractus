@@ -66,7 +66,8 @@ public class ContratoController {
 
   @PutMapping("/{contratoId}")
   @ResponseBody
-  public Contrato editarParcelas(@PathVariable("contratoId") Long contratoId, @RequestBody List<Parcela> parcelas) {
+  public Contrato editarParcelas(@PathVariable("contratoId") Long contratoId,
+                                 @RequestBody List<Parcela> parcelas) {
     return contratoService.editarParcelas(contratoId, parcelas);
   }
 }

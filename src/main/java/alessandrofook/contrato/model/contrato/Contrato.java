@@ -1,5 +1,6 @@
 package alessandrofook.contrato.model.contrato;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +42,15 @@ public class Contrato {
     return total;
   }
 
+  /**
+   * Atualiza do valor do atributo total, considerando que este é um double com apenas duas casas
+   * decimais.
+   * @param total - valor total do contrato.
+   */
   public void setTotal(double total) {
-    this.total = total;
+
+    DecimalFormat df = new DecimalFormat("###.##");
+    this.total = Double.valueOf(df.format(total));
   }
 
   public Papel getPapelDoUsuario() {

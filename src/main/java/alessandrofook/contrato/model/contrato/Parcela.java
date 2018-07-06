@@ -66,10 +66,10 @@ public class Parcela {
       return false;
     }
     Parcela parcela = (Parcela) o;
-    return Double.compare(parcela.getValor(), getValor()) == 0 &&
-        isPago() == parcela.isPago() &&
-        Objects.equals(getId(), parcela.getId()) &&
-        Objects.equals(getVencimento(), parcela.getVencimento());
+    return Double.compare(parcela.getValor(), getValor()) == 0
+        && isPago() == parcela.isPago()
+        && Objects.equals(getId(), parcela.getId())
+        && Objects.equals(getVencimento(), parcela.getVencimento());
   }
 
   @Override
