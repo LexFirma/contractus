@@ -6,6 +6,7 @@ import alessandrofook.contrato.service.ContratoService;
 import alessandrofook.contrato.service.PessoaService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,11 @@ public class ContratoController {
     pessoaService.editarPessoa(pessoa);
 
     return contratoCadastrado;
+  }
+
+  @DeleteMapping("/{id}")
+  public void deletarContrato(@PathVariable("id") Long id) {
+    contratoService.removerContrato(id);
   }
 
 }

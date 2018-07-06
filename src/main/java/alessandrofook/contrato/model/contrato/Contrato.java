@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class Contrato {
   @NotNull(message = "O Usuário deve ter um papelDoUsuario definido no contrato!")
   private Papel papelDoUsuario;
 
-  @OneToMany
+  @ManyToMany
   private List<Contraparte> contrapartes;
 
   @OneToMany

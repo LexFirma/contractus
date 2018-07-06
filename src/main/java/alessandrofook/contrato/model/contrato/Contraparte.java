@@ -1,6 +1,7 @@
 package alessandrofook.contrato.model.contrato;
 
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,7 @@ public class Contraparte {
 
   @NotEmpty(message = "O registro da contraparte não pode ser vazio!")
   @NotNull(message = "O registro da contraparte não pode ser null!")
+  @Column(unique = true)
   private String registro;
 
   @NotNull(message = "O tipo de registro da contraparte não pode ser null!")
