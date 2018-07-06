@@ -23,6 +23,8 @@ public class Parcela {
   @NotEmpty(message = "A data de vencimento não pode ser vazia!")
   private String vencimento;
 
+  private boolean pago;
+
   public Long getId() {
     return id;
   }
@@ -47,6 +49,14 @@ public class Parcela {
     this.vencimento = vencimento;
   }
 
+  public boolean isPago() {
+    return pago;
+  }
+
+  public void setPago(boolean pago) {
+    this.pago = pago;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -57,6 +67,7 @@ public class Parcela {
     }
     Parcela parcela = (Parcela) o;
     return Double.compare(parcela.getValor(), getValor()) == 0
+        && isPago() == parcela.isPago()
         && Objects.equals(getId(), parcela.getId())
         && Objects.equals(getVencimento(), parcela.getVencimento());
   }
@@ -64,6 +75,6 @@ public class Parcela {
   @Override
   public int hashCode() {
 
-    return Objects.hash(getId(), getValor(), getVencimento());
+    return Objects.hash(getId(), getValor(), getVencimento(), isPago());
   }
 }

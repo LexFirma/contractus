@@ -1,11 +1,14 @@
 package alessandrofook.contrato.service;
 
+import alessandrofook.contrato.excecoes.ParcelasInvalidasException;
 import alessandrofook.contrato.model.contrato.Contraparte;
 import alessandrofook.contrato.model.contrato.Contrato;
 import alessandrofook.contrato.model.contrato.Parcela;
 import alessandrofook.contrato.repository.ContraparteRepository;
 import alessandrofook.contrato.repository.ContratoRepository;
 import alessandrofook.contrato.repository.ParcelaRepository;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +36,34 @@ public class ContratoService {
   @Transactional
   public Contrato cadastrarContrato(Contrato contrato) {
 
-    for (Parcela parcela : contrato.getParcelas()) {
-      parcela = parcelaRepository.save(parcela);
+    validarParcelas(contrato, contrato.getParcelas());
+
+    parcelaRepository.saveAll(contrato.getParcelas());
+    contraparteRepository.saveAll(contrato.getContrapartes());
+
+    return contratoRepository.save(contrato);
+  }
+
+  private void validarParcelas(Contrato contrato, List<Parcela> parcelas) {
+
+    DecimalFormat df = new DecimalFormat("###.##");
+
+    double total = 0;
+
+    for (Parcela parcela : parcelas) {
+
+      double valor = Double.valueOf(df.format(parcela.getValor()));
+      parcela.setValor(valor);
+      total += valor;
+
     }
 
-    for (Contraparte contraparte : contrato.getContrapartes()) {
-      contraparte = contraparteRepository.save(contraparte);
+    double totalContrato = Double.valueOf(df.format(contrato.getTotal()));
+
+    if (!(Math.abs(total - totalContrato) < 0.000001)) {
+      throw new ParcelasInvalidasException();
     }
-    return contratoRepository.save(contrato);
+
   }
 
   /**
@@ -71,5 +94,39 @@ public class ContratoService {
 
   public Contrato getContrato(Long id) {
     return contratoRepository.getOne(id);
+  }
+
+  /**
+   * Realiza o adimplemento de uma parcela.
+   * @param parcelaId - Id da parcela a ser atualizada para o status de adimplida.
+   * @return Objeto do tipo parcela correspondente a parcela adimplida e atualizada.
+   */
+  public Parcela adimplirParcela(Long parcelaId) {
+
+    Parcela parcela = parcelaRepository.getOne(parcelaId);
+    parcela.setPago(true);
+
+    return parcelaRepository.save(parcela);
+  }
+
+  /**
+   * Modifica as parcelas existentes no contrato, verificando a validade da alteração.
+   * @param contratoId - id do contrato que terá seu parcelamento modificado.
+   * @param parcelas - conjunto das novas parcelas do contrato.
+   * @return Objeto do tipo contrato atualizado no sistema.
+   */
+  @Transactional
+  public Contrato editarParcelas(Long contratoId, List<Parcela> parcelas) {
+
+    Contrato contrato = getContrato(contratoId);
+
+    validarParcelas(contrato, parcelas);
+    contrato.setParcelas(new ArrayList<>());
+    contratoRepository.saveAndFlush(contrato);
+    parcelaRepository.deleteAll(contrato.getParcelas());
+
+    List<Parcela> parcelasArmazenadas = parcelaRepository.saveAll(parcelas);
+    contrato.setParcelas(parcelasArmazenadas);
+    return contratoRepository.saveAndFlush(contrato);
   }
 }

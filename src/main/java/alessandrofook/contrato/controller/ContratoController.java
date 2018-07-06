@@ -1,14 +1,17 @@
 package alessandrofook.contrato.controller;
 
 import alessandrofook.contrato.model.contrato.Contrato;
-import alessandrofook.contrato.model.pessoa.Pessoa;
+import alessandrofook.contrato.model.contrato.Parcela;
 import alessandrofook.contrato.service.ContratoService;
 import alessandrofook.contrato.service.PessoaService;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,4 +58,16 @@ public class ContratoController {
     contratoService.removerContrato(id);
   }
 
+  @PatchMapping("/{parcelaId}")
+  @ResponseBody
+  public Parcela adimplirParcela(@PathVariable("parcelaId") Long parcelaId) {
+    return contratoService.adimplirParcela(parcelaId);
+  }
+
+  @PutMapping("/{contratoId}")
+  @ResponseBody
+  public Contrato editarParcelas(@PathVariable("contratoId") Long contratoId,
+                                 @RequestBody List<Parcela> parcelas) {
+    return contratoService.editarParcelas(contratoId, parcelas);
+  }
 }
