@@ -23,6 +23,13 @@ public class ContratoService {
   @Autowired
   private ParcelaRepository parcelaRepository;
 
+  /**
+   * Método que realiza o cadastro do contrato no sistema, assim como de seus objetos compostos,
+   * parcelas e contrapartes.
+   *
+   * @param contrato - Objeto do tipo contrato a ser armazenado.
+   * @return Objeto do tipo Contrato conforme registrado no sistema, e seus objetos compostos.
+   */
   @Transactional
   public Contrato cadastrarContrato(Contrato contrato) {
 
@@ -31,12 +38,17 @@ public class ContratoService {
     }
 
     for (Contraparte contraparte : contrato.getContrapartes()) {
-
       contraparte = contraparteRepository.save(contraparte);
     }
     return contratoRepository.save(contrato);
   }
 
+  /**
+   * Método que remove do sistema um contrato e seus objetos relacionados, caso não estejam
+   * vinculados a outros contratos.
+   *
+   * @param id - id do contrato a ser removido.
+   */
   @Transactional
   public void removerContrato(Long id) {
 
@@ -47,8 +59,11 @@ public class ContratoService {
     }
 
     for (Contraparte contraparte : contrato.getContrapartes()) {
-      List<Contrato> contratosList = contratoRepository.findByContrapartesRegistro(contraparte.getRegistro());
-      if(contratosList.size() == 1) contraparteRepository.delete(contraparte);
+      String registro = contraparte.getRegistro();
+      List<Contrato> contratosList = contratoRepository.findByContrapartesRegistro(registro);
+      if (contratosList.size() == 1) {
+        contraparteRepository.delete(contraparte);
+      }
     }
 
     contratoRepository.delete(contrato);

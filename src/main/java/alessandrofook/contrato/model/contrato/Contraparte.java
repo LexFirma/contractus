@@ -82,11 +82,11 @@ public class Contraparte {
       return false;
     }
     Contraparte that = (Contraparte) o;
-    return Objects.equals(getRegistro(), that.getRegistro()) &&
-        Objects.equals(getNome(), that.getNome()) &&
-        Objects.equals(getEndereco(), that.getEndereco()) &&
-        Objects.equals(getContato(), that.getContato()) &&
-        getTipoDeRegistro() == that.getTipoDeRegistro();
+    return Objects.equals(getRegistro(), that.getRegistro())
+        && Objects.equals(getNome(), that.getNome())
+        && Objects.equals(getEndereco(), that.getEndereco())
+        && Objects.equals(getContato(), that.getContato())
+        && getTipoDeRegistro() == that.getTipoDeRegistro();
   }
 
   @Override

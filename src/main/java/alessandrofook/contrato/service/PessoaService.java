@@ -92,10 +92,10 @@ public class PessoaService {
     }
   }
 
-  public Pessoa getPessoa(Long id) {
-    return repository.getOne(id);
-  }
-
+  /**
+   * Método que remove a referência de um contrato do registro de uma pessoa.
+   * @param contrato - contrato cuja refência deve ser removida.
+   */
   public void removerContrato(Contrato contrato) {
 
     Pessoa pessoa = repository.findByContratosContaining(contrato);
@@ -103,6 +103,11 @@ public class PessoaService {
     editarPessoa(pessoa);
   }
 
+  /**
+   * Método que cadastra a referência de um contrato em uma pessoa.
+   * @param contratoCadastrado - Objeto do tipo contrato a ser referenciado.
+   * @param id - id da pessoa a conter a referência do contrato.
+   */
   public void cadastrarContrato(Contrato contratoCadastrado, Long id) {
     Pessoa pessoa = repository.getOne(id);
 

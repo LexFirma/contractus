@@ -24,9 +24,17 @@ public class ContratoController {
   @Autowired
   private PessoaService pessoaService;
 
+  /**
+   * Chamada que realiza o cadastro de um novo contrato vinculando a respectiva pessoa que o
+   * cadastrou no sistema.
+   * @param contrato - Objeto do tipo contrato a ser cadastrado.
+   * @param pessoaId - id da pessoa que será a titular do contrato.
+   * @return - Objeto do tipo contrato conforme se encontra na base de dados.
+   */
   @PostMapping("/{pessoaId}")
   @ResponseBody
-  public Contrato cadastrarContrato(@RequestBody @Valid Contrato contrato, @PathVariable("pessoaId") Long pessoaId) {
+  public Contrato cadastrarContrato(@RequestBody @Valid Contrato contrato,
+                                    @PathVariable("pessoaId") Long pessoaId) {
 
     Contrato contratoCadastrado = contratoService.cadastrarContrato(contrato);
     pessoaService.cadastrarContrato(contratoCadastrado, pessoaId);
@@ -34,6 +42,10 @@ public class ContratoController {
     return contratoCadastrado;
   }
 
+  /**
+   * Método que remove um contrato do sistema, atualizando a pessoa que era titular do contrato.
+   * @param id - id do contrato a ser removido.
+   */
   @DeleteMapping("/{id}")
   public void deletarContrato(@PathVariable("id") Long id) {
 
