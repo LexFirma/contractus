@@ -3,6 +3,7 @@ package alessandrofook.contrato.service;
 import alessandrofook.contrato.excecoes.CadastroDePessoaException;
 import alessandrofook.contrato.excecoes.EdicaoDePessoaException;
 import alessandrofook.contrato.excecoes.PessoaInexistenteException;
+import alessandrofook.contrato.model.contrato.Contrato;
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.repository.PessoaRepository;
 import java.util.List;
@@ -89,5 +90,28 @@ public class PessoaService {
 
       return repository.save(pessoa);
     }
+  }
+
+  /**
+   * Método que remove a referência de um contrato do registro de uma pessoa.
+   * @param contrato - contrato cuja refência deve ser removida.
+   */
+  public void removerContrato(Contrato contrato) {
+
+    Pessoa pessoa = repository.findByContratosContaining(contrato);
+    pessoa.getContratos().remove(contrato);
+    editarPessoa(pessoa);
+  }
+
+  /**
+   * Método que cadastra a referência de um contrato em uma pessoa.
+   * @param contratoCadastrado - Objeto do tipo contrato a ser referenciado.
+   * @param id - id da pessoa a conter a referência do contrato.
+   */
+  public void cadastrarContrato(Contrato contratoCadastrado, Long id) {
+    Pessoa pessoa = repository.getOne(id);
+
+    pessoa.getContratos().add(contratoCadastrado);
+    editarPessoa(pessoa);
   }
 }
