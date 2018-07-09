@@ -71,26 +71,20 @@ public class PessoaService {
     return repository.findAll();
   }
 
-  /**
-   * Método que edita as informações de uma pessoa cadastrada no sistema.
-   * @param pessoa - Objeto contendo as informações de uma pessoa do sistema.
-   * @return Objeto do tipo Pessoa com as informações atualizadas na base de dados.
-   */
-  public Pessoa editarPessoa(Pessoa pessoa) {
+  public Pessoa editarNomeDaPessoa(Long id, String nome) {
 
-    if (!repository.existsById(pessoa.getId())) {
-      throw new PessoaInexistenteException();
-
-    } else {
-      Pessoa pessoaCadastrada = repository.getOne(pessoa.getId());
-
-      if (pessoaCadastrada.isStatusDePagamento() != pessoa.isStatusDePagamento()) {
-        throw new EdicaoDePessoaException("Status de Pagamento");
-      }
-
+//    if(nome == null) {}
+//    else if (nome.equals("")) {}
+//
+//    else {
+//    }
+      Pessoa pessoa = repository.getOne(id);
+      pessoa.setNome(nome);
       return repository.save(pessoa);
-    }
+
+//    return null;
   }
+
 
   /**
    * Método que remove a referência de um contrato do registro de uma pessoa.
@@ -113,5 +107,27 @@ public class PessoaService {
 
     pessoa.getContratos().add(contratoCadastrado);
     editarPessoa(pessoa);
+  }
+
+  /**
+   * Método que edita as informações de uma pessoa cadastrada no sistema.
+   * @param pessoa - Objeto contendo as informações de uma pessoa do sistema.
+   * @return Objeto do tipo Pessoa com as informações atualizadas na base de dados.
+   */
+  private Pessoa editarPessoa(Pessoa pessoa) {
+
+    if (!repository.existsById(pessoa.getId())) {
+      throw new PessoaInexistenteException();
+
+    } else {
+      Pessoa pessoaCadastrada = repository.getOne(pessoa.getId());
+
+      if (pessoaCadastrada.isStatusDePagamento() != pessoa.isStatusDePagamento()) {
+        throw new EdicaoDePessoaException("Status de Pagamento");
+
+      }
+
+      return repository.save(pessoa);
+    }
   }
 }

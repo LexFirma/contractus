@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class EdicaoDePessoaException extends RuntimeException {
 
   public EdicaoDePessoaException(String atributo) {
-    super("O atributo " + atributo + "não pode ser modificado por essa request!");
+    super("O atributo " + atributo + " não pode ser modificado por essa request!");
   }
 }

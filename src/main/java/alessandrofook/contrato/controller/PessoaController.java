@@ -46,16 +46,16 @@ public class PessoaController {
     return pessoaCadastrada;
   }
 
-  @PatchMapping("{id}")
+  @PatchMapping("/{id}")
   @ResponseBody
   public Pessoa mudarStatusDePagamento(@PathVariable("id") Long id) {
     return pessoaService.mudarStatusDePagamento(id);
   }
 
-  @PutMapping
+  @PatchMapping("/{id}/{nome}")
   @ResponseBody
-  public Pessoa editarPessoa(@RequestBody @Valid Pessoa pessoa) {
-    return pessoaService.editarPessoa(pessoa);
+  public Pessoa editarNomeDaPessoa(@PathVariable("id") Long id, @PathVariable("nome") String nome) {
+    return pessoaService.editarNomeDaPessoa(id, nome);
   }
 
   @DeleteMapping("/{id}")
