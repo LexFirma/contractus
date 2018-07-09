@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/credenciais ")
+@RequestMapping("/credenciais")
 public class CredencialController {
 
   @Autowired
@@ -25,9 +25,9 @@ public class CredencialController {
     credencialService.cadastrarCredencial(credencial);
   }
 
-  @PutMapping
-  public void editarCredencial(@RequestBody @Valid Credencial credencial) {
-    credencialService.editarCredencial(credencial);
+  @PutMapping("/{login}")
+  public void editarCredencial(@RequestBody @Valid Credencial credencial, @PathVariable String login) {
+    credencialService.editarCredencial(credencial, login);
   }
 
   @DeleteMapping("/{login}")

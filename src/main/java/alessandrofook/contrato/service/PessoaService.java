@@ -71,23 +71,23 @@ public class PessoaService {
     return repository.findAll();
   }
 
+  /**
+   * Método que modifica o nome da pessoa cadastrada no sistema.
+   * @param id - Id da pessoa a ser modificada.
+   * @param nome - Novo nome a ser atribuído a pessoa.
+   * @return - Objeto do tipo Pessoa atualizado no banco de dados do sistema.
+   */
   public Pessoa editarNomeDaPessoa(Long id, String nome) {
 
-//    if(nome == null) {}
-//    else if (nome.equals("")) {}
-//
-//    else {
-//    }
-      Pessoa pessoa = repository.getOne(id);
-      pessoa.setNome(nome);
-      return repository.save(pessoa);
-
-//    return null;
+    Pessoa pessoa = repository.getOne(id);
+    pessoa.setNome(nome);
+    return repository.save(pessoa);
   }
 
 
   /**
    * Método que remove a referência de um contrato do registro de uma pessoa.
+   *
    * @param contrato - contrato cuja refência deve ser removida.
    */
   public void removerContrato(Contrato contrato) {
@@ -99,6 +99,7 @@ public class PessoaService {
 
   /**
    * Método que cadastra a referência de um contrato em uma pessoa.
+   *
    * @param contratoCadastrado - Objeto do tipo contrato a ser referenciado.
    * @param id - id da pessoa a conter a referência do contrato.
    */
@@ -111,6 +112,7 @@ public class PessoaService {
 
   /**
    * Método que edita as informações de uma pessoa cadastrada no sistema.
+   *
    * @param pessoa - Objeto contendo as informações de uma pessoa do sistema.
    * @return Objeto do tipo Pessoa com as informações atualizadas na base de dados.
    */

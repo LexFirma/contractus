@@ -41,9 +41,9 @@ public class CredencialService {
    * Método para modificação de credenciais existentes no sistema, não podendo modificar a Role.
    * @param credencial - Objeto contendo informações a serem atualizadas no registro da credencial.
    */
-  public void editarCredencial(Credencial credencial) {
+  public void editarCredencial(Credencial credencial, String login) {
 
-    Credencial credencialArmazenada = repository.findByLogin(credencial.getLogin());
+    Credencial credencialArmazenada = repository.findByLogin(login);
     if (credencial.getRole().equals(credencialArmazenada.getRole())) {
       credencial.setId(credencialArmazenada.getId());
       repository.save(credencial);
