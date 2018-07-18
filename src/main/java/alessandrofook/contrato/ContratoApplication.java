@@ -15,17 +15,4 @@ public class ContratoApplication {
   public static void main(String[] args) {
     SpringApplication.run(ContratoApplication.class, args);
   }
-
-  @RequestMapping("/home")
-  public String hello() {
-    return "Hello buddy!";
-  }
-
-  @RequestMapping("/users")
-  @ResponseBody
-  public String getUsers() {
-    return "{\"users\":[{\"name\":\"Lucas\", \"country\":\"Brazil\"}," +
-        "{\"name\":\"Jackie\",\"country\":\"China\"}]}";
-  }
-
 }
