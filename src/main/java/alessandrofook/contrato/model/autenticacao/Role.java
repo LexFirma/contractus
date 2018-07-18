@@ -1,6 +1,6 @@
 package alessandrofook.contrato.model.autenticacao;
 
 public enum Role {
-    ADMIN, USUARIO;
+    ROLE_ADMIN, ROLE_USUARIO;
 
 }
