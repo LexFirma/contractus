@@ -49,6 +49,7 @@ public class PessoaController {
 
   @PatchMapping("/{id}")
   @ResponseBody
+  @PreAuthorize("hasRole('ADMIN')")
   public Pessoa mudarStatusDePagamento(@PathVariable("id") Long id) {
     return pessoaService.mudarStatusDePagamento(id);
   }
@@ -61,6 +62,7 @@ public class PessoaController {
 
   @DeleteMapping("/{id}")
   @Transactional
+  @PreAuthorize("hasRole('ADMIN')")
   public void deletarPessoa(@PathVariable("id") Long id) {
     credencialService.removerCredencialDePessoa(id);
     pessoaService.removerPessoa(id);
@@ -68,6 +70,7 @@ public class PessoaController {
 
   @GetMapping
   @ResponseBody
+  @PreAuthorize("hasRole('ADMIN')")
   public List<Pessoa> listarPessoas() {
     return pessoaService.listarPessoas();
   }
