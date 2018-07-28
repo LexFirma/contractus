@@ -18,13 +18,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final CredencialService service;
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager, CredencialService service) {
+    public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
+                                  CredencialService service) {
         super(authenticationManager);
         this.service = service;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(TokenAuthenticationService.HEADER_STRING);
 
         if(header == null || !header.startsWith(TokenAuthenticationService.TOKEN_PREFIX)) {

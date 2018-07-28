@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 public class Credencial implements UserDetails {
@@ -42,7 +43,7 @@ public class Credencial implements UserDetails {
    */
   public Credencial(Pessoa pessoa) {
     this.setUsername(pessoa.getNome());
-    this.setPassword("admin");
+    this.setPassword(new BCryptPasswordEncoder().encode("admin"));
     this.setRole(Role.ROLE_USUARIO);
     this.setPessoa(pessoa);
   }
