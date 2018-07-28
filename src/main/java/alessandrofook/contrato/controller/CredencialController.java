@@ -28,7 +28,8 @@ public class CredencialController {
   }
 
   @PutMapping("/{login}")
-  public void editarCredencial(@RequestBody @Valid Credencial credencial, @PathVariable String login) {
+  public void editarCredencial(@RequestBody @Valid Credencial credencial,
+                               @PathVariable String login) {
     credencialService.editarCredencial(credencial, login);
   }
 
