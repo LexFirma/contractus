@@ -7,11 +7,16 @@ import alessandrofook.contrato.model.autenticacao.Credencial;
 import alessandrofook.contrato.model.autenticacao.Role;
 import alessandrofook.contrato.model.pessoa.Pessoa;
 import alessandrofook.contrato.repository.CredencialRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CredencialService {
+public class CredencialService implements UserDetailsService {
 
   @Autowired
   private CredencialRepository repository;
@@ -31,7 +36,7 @@ public class CredencialService {
    * @param credencial - Objeto do tipo de Credencial que deve ter a Role de ADMIN.
    */
   public void cadastrarCredencial(Credencial credencial) {
-    if (credencial.getRole().equals(Role.USUARIO)) {
+    if (credencial.getRole().equals(Role.ROLE_USUARIO)) {
       throw new CadastroDeCredencialException();
     }
     repository.save(credencial);
@@ -41,9 +46,9 @@ public class CredencialService {
    * Método para modificação de credenciais existentes no sistema, não podendo modificar a Role.
    * @param credencial - Objeto contendo informações a serem atualizadas no registro da credencial.
    */
-  public void editarCredencial(Credencial credencial) {
+  public void editarCredencial(Credencial credencial, String login) {
 
-    Credencial credencialArmazenada = repository.findByLogin(credencial.getLogin());
+    Credencial credencialArmazenada = repository.findByUsername(login);
     if (credencial.getRole().equals(credencialArmazenada.getRole())) {
       credencial.setId(credencialArmazenada.getId());
       repository.save(credencial);
@@ -59,13 +64,22 @@ public class CredencialService {
    */
   public void removerCredencialDeAdmin(String login) {
 
-    Credencial credencial = repository.findByLogin(login);
+    Credencial credencial = repository.findByUsername(login);
 
-    if (credencial.getRole().equals(Role.ADMIN)) {
-      repository.deleteByLogin(login);
+    if (credencial.getRole().equals(Role.ROLE_ADMIN)) {
+      repository.deleteByUsername(login);
 
     } else {
       throw new DeletarCredencialDeUsuarioException();
     }
+  }
+
+  @Override
+  public User loadUserByUsername(String s) throws UsernameNotFoundException {
+
+    Credencial credencial = repository.findByUsername(s);
+    List authList = AuthorityUtils.createAuthorityList(credencial.getRole().toString());
+
+    return new User(credencial.getUsername(), credencial.getPassword(), authList);
   }
 }

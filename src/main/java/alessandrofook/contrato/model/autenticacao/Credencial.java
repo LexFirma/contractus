@@ -1,6 +1,7 @@
 package alessandrofook.contrato.model.autenticacao;
 
 import alessandrofook.contrato.model.pessoa.Pessoa;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,22 +11,25 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-public class Credencial {
+public class Credencial implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @NotNull(message = "O login não pode ser null!")
-  @NotEmpty(message = "O login não pode ser vazio!")
+  @NotNull(message = "O username não pode ser null!")
+  @NotEmpty(message = "O username não pode ser vazio!")
   @Column(unique = true)
-  private String login;
+  private String username;
 
-  @NotNull(message = "A senha não pode ser null!")
-  @NotEmpty(message = "A senha não pode ser vazio!")
-  private String senha;
+  @NotNull(message = "A password não pode ser null!")
+  @NotEmpty(message = "A password não pode ser vazio!")
+  private String password;
 
   @NotNull(message = "A função da pessoa não pode ser null!")
   private Role role;
@@ -38,9 +42,9 @@ public class Credencial {
    * @param pessoa - Objeto referente a uma pessoa cadastrada no sistema.
    */
   public Credencial(Pessoa pessoa) {
-    this.setLogin(pessoa.getNome());
-    this.setSenha("admin");
-    this.setRole(Role.USUARIO);
+    this.setUsername(pessoa.getNome());
+    this.setPassword(new BCryptPasswordEncoder().encode("admin"));
+    this.setRole(Role.ROLE_USUARIO);
     this.setPessoa(pessoa);
   }
 
@@ -55,20 +59,22 @@ public class Credencial {
     this.id = id;
   }
 
-  public String getLogin() {
-    return login;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public void setLogin(String login) {
-    this.login = login;
+  @Override
+  public String getUsername() {
+    return username;
   }
 
-  public String getSenha() {
-    return senha;
+  @Override
+  public String getPassword() {
+    return password;
   }
 
-  public void setSenha(String senha) {
-    this.senha = senha;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public Pessoa getPessoa() {
@@ -96,13 +102,39 @@ public class Credencial {
       return false;
     }
     Credencial that = (Credencial) o;
-    return Objects.equals(getLogin(), that.getLogin())
-        && Objects.equals(getSenha(), that.getSenha());
+    return Objects.equals(getUsername(), that.getUsername())
+        && Objects.equals(getPassword(), that.getPassword());
   }
 
   @Override
   public int hashCode() {
 
-    return Objects.hash(getLogin(), getSenha());
+    return Objects.hash(getUsername(), getPassword());
   }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
 }

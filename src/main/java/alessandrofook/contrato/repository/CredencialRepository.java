@@ -10,7 +10,7 @@ public interface CredencialRepository extends JpaRepository<Credencial, Long> {
 
   void deleteByPessoaId(Long pessoaId);
 
-  void deleteByLogin(String login);
+  void deleteByUsername(String username);
 
-  Credencial findByLogin(String login);
+  Credencial findByUsername(String username);
 }

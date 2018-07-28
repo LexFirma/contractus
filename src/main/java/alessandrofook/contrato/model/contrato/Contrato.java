@@ -2,6 +2,7 @@ package alessandrofook.contrato.model.contrato;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -79,4 +80,25 @@ public class Contrato {
   }
 
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Contrato)) {
+      return false;
+    }
+    Contrato contrato = (Contrato) o;
+    return Double.compare(contrato.getTotal(), getTotal()) == 0
+        && Objects.equals(getId(), contrato.getId())
+        && getPapelDoUsuario() == contrato.getPapelDoUsuario()
+        && Objects.equals(getContrapartes(), contrato.getContrapartes())
+        && Objects.equals(getParcelas(), contrato.getParcelas());
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(getId(), getTotal(), getPapelDoUsuario(), getContrapartes(), getParcelas());
+  }
 }
